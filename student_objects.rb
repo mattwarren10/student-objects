@@ -11,24 +11,37 @@ class Classroom
 	end
 
 	def search
-		puts "Search a name: "
-		search = gets.chomp
-		@students.each_with_index do |s, index|
-			if search == s.first_name
-				puts index
-				puts s.first_name
-			else
-				"Your search doesn't return anything."
+		puts "Would you like to search by name? (y/n) "
+		if gets.chomp == 'y'
+			puts "Enter a name: "
+			search = gets.chomp
+			@students.each_with_index do |s, index|
+				if search == s.first_name
+					puts index
+				end
 			end
-		end
+		else
+			puts "Have a great day!"
+		end	
 	end
+
+	def sort
+		social = []
+		@students.each do |s|
+			social.push(s.ssn)
+		end
+		social_security_numbers = social.sort { |a, b| b <=> a}
+		puts social_security_numbers
+	end
+
 end
 
 class Student
-	attr_accessor :scores, :first_name
-	def initialize(scores, first_name)
+	attr_accessor :scores, :first_name, :ssn
+	def initialize(scores, first_name, ssn)
 		@scores = scores
 		@first_name = first_name
+		@ssn = ssn
 	end
 
 	def get_average
@@ -55,17 +68,17 @@ end
 
 
 
-alex = Student.new([100, 100, 100, 0, 100], "Alex")
-brad = Student.new([84, 98, 32, 75, 83], "Brad")
-celeste = Student.new([100, 58, 98, 83, 75], "Celeste")
-david = Student.new([89, 98, 83, 94, 91], "David")
+alex = Student.new([100, 100, 100, 0, 100], "Alex", "111-11-1111")
+brad = Student.new([84, 98, 32, 75, 83], "Brad", "222-22-2222")
+celeste = Student.new([100, 58, 98, 83, 75], "Celeste", "333-33-3333")
+david = Student.new([89, 98, 83, 94, 91], "David", "444-44-4444")
 classroom = Classroom.new
 classroom.add_student(alex)
 classroom.add_student(brad)
 classroom.add_student(celeste)
 classroom.add_student(david)
 classroom.search
-
+classroom.sort
 # puts alex
 # puts alex.scores
 # puts alex.first_name
